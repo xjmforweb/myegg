@@ -5,6 +5,17 @@ class JiraService extends Service {
   constructor(ctx) {
     super(ctx)
     this.accessToken = null
+    this.sentMap = {}
+  }
+
+  // 是否重复触发
+  checkRepeat() {
+    const LIMIT = 5 * 60 * 1000 // 5分钟
+    const preTime = this.sentMap[this.ctx.query.user_id + this.ctx.query.issueId]
+    const now = new Date().getTime()
+    this.sentMap[this.ctx.query.user_id + this.ctx.query.issueId] = now
+    if (!preTime) return false
+    return now - preTime < LIMIT
   }
 
   async findAssignUserEmail() {
