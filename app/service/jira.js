@@ -3,18 +3,15 @@ const Service = require('egg').Service
 
 const LIMIT = 5 * 60 * 1000 // 5分钟
 
-class JiraService extends Service {
-  constructor(ctx) {
-    super(ctx)
-    this.accessToken = null
-    this.sentMap = {}
-  }
+global.accessToken = null
+global.sentMap = {}
 
+class JiraService extends Service {
   // 是否重复触发
   checkRepeat() {
-    const preTime = this.sentMap[this.ctx.query.user_id + this.ctx.query.issueId]
+    const preTime = global.sentMap[this.ctx.query.user_id + this.ctx.query.issueId]
     const now = new Date().getTime()
-    this.sentMap[this.ctx.query.user_id + this.ctx.query.issueId] = now
+    global.sentMap[this.ctx.query.user_id + this.ctx.query.issueId] = now
     if (!preTime) return false
     return now - preTime < LIMIT
   }
@@ -40,14 +37,14 @@ class JiraService extends Service {
     const { res } = await this.ctx.curl('https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=ww1b72481777a8e8a8&corpsecret=fu09sgyVE54LYu86Vkj5QTiaMjVNRFECDuenZ-HdmVU', {
       dataType: 'json',
     })
-    this.accessToken = res.data.access_token
-    console.log(chalk.red('access_token: ' + this.accessToken))
+    global.accessToken = res.data.access_token
+    console.log(chalk.red('access_token: ' + global.accessToken))
   }
   // 获取企业微信用户id
   async getUserId(userEmail) {
     const { ctx } = this
-    if (!this.accessToken) await this.getToken()
-    const { res } = await ctx.curl('https://qyapi.weixin.qq.com/cgi-bin/user/get_userid_by_email?access_token=' + this.accessToken, {
+    if (!global.accessToken) await this.getToken()
+    const { res } = await ctx.curl('https://qyapi.weixin.qq.com/cgi-bin/user/get_userid_by_email?access_token=' + global.accessToken, {
       method: 'post',
       dataType: 'json',
       contentType: 'json',
@@ -66,7 +63,7 @@ class JiraService extends Service {
 
   // 发送消息
   async sendMsg(userid, issueId) {
-    const { res } = await this.ctx.curl('https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=' + this.accessToken, {
+    const { res } = await this.ctx.curl('https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=' + global.accessToken, {
       method: 'post',
       dataType: 'json',
       contentType: 'json',
