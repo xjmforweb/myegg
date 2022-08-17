@@ -5,7 +5,7 @@ module.exports = {
     // interval: '3s',
     type: 'all',
   },
-  async task(ctx) {
-    ctx.service.jira.sentMap = {}
+  async task() {
+    global.sentMap = {}
   },
 }
