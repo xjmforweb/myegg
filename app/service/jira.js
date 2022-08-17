@@ -1,6 +1,8 @@
 const chalk = require('chalk')
 const Service = require('egg').Service
 
+const LIMIT = 5 * 60 * 1000 // 5分钟
+
 class JiraService extends Service {
   constructor(ctx) {
     super(ctx)
@@ -10,7 +12,6 @@ class JiraService extends Service {
 
   // 是否重复触发
   checkRepeat() {
-    const LIMIT = 5 * 60 * 1000 // 5分钟
     const preTime = this.sentMap[this.ctx.query.user_id + this.ctx.query.issueId]
     const now = new Date().getTime()
     this.sentMap[this.ctx.query.user_id + this.ctx.query.issueId] = now
