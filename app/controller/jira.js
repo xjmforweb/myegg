@@ -10,8 +10,6 @@ class JiraController extends Controller {
   async index() {
     const { ctx } = this
     ctx.validate(indexRule, ctx.query)
-    const isRepeatReq = ctx.service.jira.checkRepeat()
-    if (isRepeatReq) return
     const userEmail = await ctx.service.jira.findAssignUserEmail()
     console.log(userEmail)
     if (!userEmail) {
