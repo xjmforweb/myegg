@@ -19,17 +19,21 @@ module.exports = appInfo => {
     myAppName: 'jira-help',
     cluster: {
       listen: {
-        port: 8090
-      }
+        port: 8090,
+      },
     },
     security: {
       xframe: { enable: false },
       csrf: { enable: false },
-    }
+    },
   }
 
   return {
     ...config,
     ...userConfig,
+    logger: {
+      consoleLevel: 'DEBUG',
+      disableConsoleAfterReady: false,
+    },
   }
 }

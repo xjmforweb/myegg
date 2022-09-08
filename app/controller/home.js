@@ -3,12 +3,10 @@ const Controller = require('egg').Controller
 class HomeController extends Controller {
   async index() {
     const { ctx } = this
-    const isRepeatReq = ctx.service.jira.checkRepeat()
-    if (isRepeatReq) {
-      ctx.body = 'too fast'
-      return
+    if (ctx.query.log) {
+      ctx.logger.debug(new Date())
     }
-    ctx.body = global.sentMap
+    ctx.body = 'Today is ' + new Date()
   }
 }
 
