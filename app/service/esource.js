@@ -19,7 +19,7 @@ class EsourceService extends Service {
     })
     if (res.data.errcode === 42001) {
       await ctx.service.jira.getToken()
-      await this.sendMsg()
+      await this.sendMsg(content)
     }
   }
 }
