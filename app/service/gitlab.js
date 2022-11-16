@@ -1,7 +1,7 @@
 const Service = require('egg').Service
 
 class EsourceService extends Service {
-  async sendMsg(content) {
+  async sendMsg(content, userId) {
     const { ctx } = this
     if (!global.accessToken) await ctx.service.jira.getToken()
     const { res } = await this.ctx.curl('https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=' + global.accessToken, {
@@ -9,7 +9,7 @@ class EsourceService extends Service {
       dataType: 'json',
       contentType: 'json',
       data: {
-        touser: 13107707325,
+        touser: userId,
         msgtype: 'text',
         agentid: 1000037,
         text: {
