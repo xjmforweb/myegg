@@ -56,7 +56,7 @@ class JiraService extends Service {
     if (res.data.errcode === 42001) {
       // 过期
       await this.getToken()
-      return this.getUserId()
+      return await this.getUserId()
     }
     return res.data.userid
   }

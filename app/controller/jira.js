@@ -11,8 +11,8 @@ class JiraController extends Controller {
     const { ctx } = this
     ctx.validate(indexRule, ctx.query)
     const userEmail = await ctx.service.jira.findAssignUserEmail()
-    console.log(userEmail)
     if (!userEmail) {
+      ctx.logger.error(new Error(ctx.query))
       ctx.body = 'not assignee'
       return
     }
