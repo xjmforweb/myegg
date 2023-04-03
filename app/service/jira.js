@@ -30,6 +30,10 @@ class JiraService extends Service {
       },
     })
     if (res.data.fields.assignee.name === ctx.query.user_id) return false
+    if (!res.data.fields.assignee) {
+      ctx.logger.error(new Error(JSON.stringify({ errMsg: 'not assignee', query: ctx.query, assignee: res.data.fields })))
+    }
+
     return res.data.fields.assignee.emailAddress
   }
 
