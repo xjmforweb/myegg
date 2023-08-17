@@ -24,7 +24,7 @@ class JiraService extends Service {
       dataType: 'json',
       headers: {
         Authorization: `Basic ${Buffer.from(
-          'prime1:123456'
+          'jiaming.xu:xjm@123456'
         ).toString('base64')}`,
         Accept: 'application/json',
       },
