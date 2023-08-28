@@ -8,6 +8,13 @@ class HomeController extends Controller {
     }
     ctx.body = 'Today is ' + new Date()
   }
+
+  async saveWord() {
+    const { ctx } = this
+    console.log(ctx.query)
+    await ctx.service.saveWord.writeWord('hhhh')
+    ctx.body = 'ok'
+  }
 }
 
 module.exports = HomeController

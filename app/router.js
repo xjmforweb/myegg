@@ -6,4 +6,5 @@ module.exports = app => {
   router.get('/', controller.home.index)
   router.post('/jira', controller.jira.index)
   router.post('/gitlabMsg', controller.gitlab.index)
+  router.get('/saveWord', controller.home.saveWord)
 }
