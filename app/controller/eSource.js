@@ -11,7 +11,7 @@ class ESourceController extends Controller {
   async updateText() {
     const { ctx } = this
     ctx.validate(updateTextRule, ctx.query)
-    const path = 'D:\\projects\\prime-es-ui\\src\\constants\\index.js'
+    const path = 'D:\\projects\\prime-es-ui-new\\src\\locales\\en-US\\index.js'
     const str = await fs.readFile(path, 'utf8')
     const targetText = `'${ctx.query.val}'`
     if (!str.includes(targetText)) {
